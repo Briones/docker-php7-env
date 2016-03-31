@@ -1,0 +1,31 @@
+application:
+  build: .
+  dockerfile: ./Dockerfile.app
+  expose:
+    - "9000"
+    - "9001"
+  links:
+    - redis
+  container_name: app
+  volumes:
+    - $APP_PATH:/var/www/application
+
+redis:
+  image: redis:3.0.6
+  container_name: cache
+
+webserver:
+  build: .
+  dockerfile: ./Dockerfile.nginx
+  ports:
+    - "80:80"
+    - "443:443"
+  container_name: nginx
+  links:
+    - application
+  domainname: app.dev
+  hostname: app.dev
+  volumes:
+    - ./logs/nginx:/var/log/nginx
+  volumes_from:
+    - application:ro
