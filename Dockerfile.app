@@ -40,7 +40,7 @@ RUN apt-add-repository ppa:ondrej/php && apt-get update && apt-get install -y -q
 
 RUN service php7.0-fpm stop
 
-RUN rm -f /etc/php/mods-available/xdebug.ini
+RUN rm -f /etc/php/7.0/mods-available/xdebug.ini
 COPY conf/xdebug.ini /etc/php/mods-available/xdebug.ini
 
 CMD ["php-fpm7.0", "--nodaemonize"]
