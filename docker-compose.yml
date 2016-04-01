@@ -8,7 +8,7 @@ application:
     - redis
   container_name: app
   volumes:
-    - $APP_PATH:/var/www/application
+    - ./project:/var/www/application
 
 redis:
   image: redis:3.0.6

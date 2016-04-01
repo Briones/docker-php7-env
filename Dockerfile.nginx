@@ -1,1 +1,8 @@
 FROM nginx:1.9.12
+
+MAINTAINER Roberto Briones <contacto@robertobriones.com>
+
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/application.conf /etc/nginx/sites-available/
+
+RUN mkdir -p /etc/nginx/sites-enabled/ && ln -s /etc/nginx/sites-available/*.conf /etc/nginx/sites-enabled/

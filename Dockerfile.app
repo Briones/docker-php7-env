@@ -1,5 +1,7 @@
 FROM ubuntu:trusty
 
+MAINTAINER Roberto Briones <contacto@robertobriones.com>
+
 RUN locale-gen en_US.UTF-8
 
 ENV LANG en_US.UTF-8
@@ -40,7 +42,10 @@ RUN apt-add-repository ppa:ondrej/php && apt-get update && apt-get install -y -q
 
 RUN service php7.0-fpm stop
 
-RUN rm -f /etc/php/7.0/mods-available/xdebug.ini
-COPY conf/xdebug.ini /etc/php/mods-available/xdebug.ini
+RUN rm -rf /etc/php/7.0/fpm/pool.d/*
+COPY conf/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+
+RUN rm -f /etc/php/mods-available/xdebug.ini
+COPY conf/xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
 
 CMD ["php-fpm7.0", "--nodaemonize"]
