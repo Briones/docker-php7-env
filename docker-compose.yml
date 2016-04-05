@@ -6,6 +6,7 @@ application:
     - "9001"
   links:
     - redis
+    - mysql
   container_name: app
   volumes:
     - ./project:/var/www/application
@@ -14,12 +15,19 @@ redis:
   image: redis:3.0.6
   container_name: cache
 
+mysql:
+  image: mysql
+  container_name: database
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+
 webserver:
   build: .
   dockerfile: ./Dockerfile.nginx
   ports:
     - "80:80"
-    - "443:443"
   container_name: nginx
   links:
     - application
