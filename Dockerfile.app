@@ -28,6 +28,8 @@ RUN apt-get update && apt-get install -y -qq \
 
 RUN service php7.0-fpm stop
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+
 RUN rm -rf /etc/php/7.0/fpm/pool.d/*
 COPY conf/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 

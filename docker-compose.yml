@@ -26,12 +26,12 @@ mysql:
     MYSQL_DATABASE: MenuDelDia
     MYSQL_ROOT_PASSWORD: password
 
-webserver:
+nginx:
   build: .
   dockerfile: ./Dockerfile.nginx
   ports:
     - "80:80"
-  container_name: nginx
+  container_name: webserver
   links:
     - application
   domainname: app.dev
