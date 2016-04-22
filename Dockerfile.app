@@ -1,26 +1,14 @@
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 
 MAINTAINER Roberto Briones <contacto@robertobriones.com>
-
-RUN locale-gen en_US.UTF-8
-
-ENV LANG en_US.UTF-8
 
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 # Avoid ERROR: invoke-rc.d: policy-rc.d denied execution of start.
 RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d
 
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    curl \
-    librecode0 \
-    libsqlite3-0 \
-    libxml2 \
-    software-properties-common --no-install-recommends && \
-    rm -r /var/lib/apt/lists/*
-
-RUN apt-add-repository ppa:ondrej/php && apt-get update && apt-get install -y -qq \
+RUN apt-get update && apt-get install -y -qq \
+    apt-utils \
     php7.0-fpm \
     php7.0-cli \
     php7.0-curl \
@@ -35,9 +23,7 @@ RUN apt-add-repository ppa:ondrej/php && apt-get update && apt-get install -y -q
     php7.0-xsl \
     php-xdebug \
     php-ssh2 \
-    php-redis \
-    php-apcu \
-    php-apcu-bc && \
+    php-redis && \
     rm -r /var/lib/apt/lists/*
 
 RUN service php7.0-fpm stop

@@ -14,6 +14,8 @@ application:
 redis:
   image: redis:3.0.6
   container_name: cache
+  ports:
+    - "6379:6379"
 
 mysql:
   image: mysql
@@ -21,6 +23,7 @@ mysql:
   ports:
     - "3306:3306"
   environment:
+    MYSQL_DATABASE: MenuDelDia
     MYSQL_ROOT_PASSWORD: password
 
 webserver:
