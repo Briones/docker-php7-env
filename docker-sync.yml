@@ -1,0 +1,7 @@
+version: "2"
+options:
+  verbose: true
+syncs:
+  appcode-sync:
+    src: './project'
+    dest: '/var/www/application'

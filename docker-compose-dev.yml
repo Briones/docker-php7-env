@@ -1,0 +1,11 @@
+version: "2.1"
+services:
+  application:
+    volumes_from:
+      - container:appcode-sync:rw
+  nginx:
+    volumes_from:
+      - container:appcode-sync:ro
+volumes:
+  appcode-sync:
+    external: true

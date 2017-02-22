@@ -1,42 +1,37 @@
-application:
-  build: .
-  dockerfile: ./Dockerfile.app
-  expose:
-    - "9000"
-    - "9001"
-  links:
-    - redis
-    - mysql
-  container_name: app
-  volumes:
-    - ./project:/var/www/application
+version: "2.1"
+services:
+  application:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.app
+    expose:
+      - "9000"
+      - "9001"
+    container_name: app
 
-redis:
-  image: redis:3.0.6
-  container_name: cache
-  ports:
-    - "6379:6379"
+  redis:
+    image: redis:3.0.6
+    container_name: cache
+    ports:
+      - "6379:6379"
 
-mysql:
-  image: mysql
-  container_name: database
-  ports:
-    - "3306:3306"
-  environment:
-    MYSQL_DATABASE: MenuDelDia
-    MYSQL_ROOT_PASSWORD: password
+  mysql:
+    image: mysql
+    container_name: database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: MenuDelDia
+      MYSQL_ROOT_PASSWORD: password
 
-nginx:
-  build: .
-  dockerfile: ./Dockerfile.nginx
-  ports:
-    - "80:80"
-  container_name: webserver
-  links:
-    - application
-  domainname: app.dev
-  hostname: app.dev
-  volumes:
-    - ./logs/nginx:/var/log/nginx
-  volumes_from:
-    - application:ro
+  nginx:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.nginx
+    ports:
+      - "80:80"
+    container_name: webserver
+    domainname: app.dev
+    hostname: app.dev
+    volumes:
+      - ./logs/nginx:/var/log/nginx
